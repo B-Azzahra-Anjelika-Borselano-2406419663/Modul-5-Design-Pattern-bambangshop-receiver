@@ -66,7 +66,7 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [v] Commit: `Create Notification database and Notification repository struct skeleton.`
     -   [v] Commit: `Implement add function in Notification repository.`
     -   [v] Commit: `Implement list_all_as_string function in Notification repository.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
+    -   [v] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
 -   **STAGE 3: Implement services and controllers**
     -   [ ] Commit: `Create Notification service struct skeleton.`
     -   [ ] Commit: `Implement subscribe function in Notification service.`
@@ -85,5 +85,8 @@ This is the place for you to write reflections:
 ### Mandatory (Subscriber) Reflections
 
 #### Reflection Subscriber-1
+1. Using RwLock<> is necessary because the Vec<Notification> is accessed by multiple threads with different access patterns: many operations only need to read (e.g., listing notifications), while fewer operations need to write (e.g., adding a new notification). RwLock<> allows multiple readers to access the data concurrently as long as there is no writer, which improves performance in read-heavy scenarios like this system. If we used Mutex<>, all access, both read and write, would be mutually exclusive, meaning even simple read operations would block each other. This would reduce concurrency and make the system less efficient, especially when notifications are frequently read.
+
+2. Rust does not allow direct mutation of static variables like Java because of its strict guarantees around memory safety and data races. In Java, mutable static variables are allowed, but thread safety must be handled manually, which can easily lead to bugs. Rust, on the other hand, enforces safety at compile time by disallowing mutable global state unless it is explicitly wrapped in safe concurrency primitives like Mutex, RwLock, or DashMap. The use of lazy_static allows us to initialize complex static variables at runtime while still requiring safe access patterns. This design ensures that any mutation is controlled and thread-safe, preventing undefined behavior and race conditions by default.
 
 #### Reflection Subscriber-2
