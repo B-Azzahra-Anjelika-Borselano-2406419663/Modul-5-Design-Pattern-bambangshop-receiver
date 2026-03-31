@@ -77,7 +77,7 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [v] Commit: `Implement receive function in Notification controller.`
     -   [v] Commit: `Implement list_messages function in Notification service.`
     -   [v] Commit: `Implement list function in Notification controller.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
+    -   [v] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
 
 ## Your Reflections
 This is the place for you to write reflections:
@@ -90,3 +90,8 @@ This is the place for you to write reflections:
 2. Rust does not allow direct mutation of static variables like Java because of its strict guarantees around memory safety and data races. In Java, mutable static variables are allowed, but thread safety must be handled manually, which can easily lead to bugs. Rust, on the other hand, enforces safety at compile time by disallowing mutable global state unless it is explicitly wrapped in safe concurrency primitives like Mutex, RwLock, or DashMap. The use of lazy_static allows us to initialize complex static variables at runtime while still requiring safe access patterns. This design ensures that any mutation is controlled and thread-safe, preventing undefined behavior and race conditions by default.
 
 #### Reflection Subscriber-2
+1. Yes, I explored parts outside the main tutorial steps such as src/lib.rs. From there, I learned how the project organizes shared logic and exposes modules in a more structured way. It helped me understand how Rust separates concerns between the binary (main.rs) and reusable logic (lib.rs), making the codebase cleaner and easier to maintain.
+
+2. The Observer pattern makes it very easy to add more subscribers because the main app only needs to maintain a list of subscribers and notify them through a common interface (in this case, HTTP requests). When spawning multiple instances of the Receiver app, each instance simply registers itself, and the publisher does not need to change its logic. However, if we spawn more than one instance of the Main app, it becomes more complex because each instance may maintain its own separate list of subscribers. This can lead to inconsistency unless there is a shared storage or coordination mechanism (e.g., database or message broker), meaning scalability on the publisher side is not as straightforward.
+
+3.No, I have not tried to make my own tests or enhance the Postman collection yet. This is because I focused on completing the core functionality of the tutorial first, such as ensuring that the notification system works correctly and that subscribers can receive updates as expected. I prioritized understanding the implementation of the Observer pattern and making sure all required features run without errors. However, I realize that adding tests and improving Postman documentation would be very useful for verifying correctness and making the API easier to use and understand, especially in a team setting. These are aspects I would consider exploring further once the main functionality is stable.
